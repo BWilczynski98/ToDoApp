@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/638d93cf63.js" crossorigin="anonymous"></script>
+    <script src="./app.js" defer></script>
+    <link rel="stylesheet" href="./style.css">
+    <title>To Do App</title>
+</head>
+
+<body>
+    <div class="flex">
+        <section class="background flex">
+            <div class="header-container">
+                <label>
+                    <input type="checkbox">
+                    <span class="btn--dark--mode"></span>
+                </label>
+                <h1>to do</h1>
+                <input type="text" name="task" class="input-user" id="task--enter" placeholder="Enter your task"
+                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter your task'" />
+            </div>
+        </section>
+        <section class="place-to-display-tasks grid">
+            <ul class="to--do--tasks--render"></ul>
+            <div class="done--tasks">
+                <h4 class="header--done--task">Completed tasks</h4>
+                <ul class="done--tasks--render"></ul>
+            </div>
+        </section>
+        <section class="side--panel">
+            <!-- <div><button>Close the window</button></div>
+                    <div><label for=""> Enter step <input type="text"></label></div>
+                    <ul class="step--render"></ul> -->
+        </section>
+    </div>
+</body>
+
+</html>
