@@ -114,3 +114,4 @@ inputUserTask.addEventListener('keyup', (key) => {
     }
 });
 darkModeBtn.addEventListener('click', darkMode);
+console.log('test');
