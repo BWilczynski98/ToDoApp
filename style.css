@@ -48,13 +48,12 @@ body {
 
 .side--panel {
     position: fixed;
-    right: 0px;
     top: 0;
     width: 350px;
     height: 100vh;
     background-color: rgb(255, 255, 255);
     border-left: 1px solid rgb(196, 196, 196);
-    transition: .5s;
+    transition: .2s;
 }
 /* Element */
 
@@ -237,6 +236,9 @@ input[type="checkbox"]:checked ~ .btn--dark--mode::after {
     display: block;
 }
 
-.position--right--0 {
+.side--panel--invisible {
+    right: -350px;
+}
+.side--panel--visible {
     right: 0;
 }

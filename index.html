@@ -20,7 +20,7 @@
                     <span class="btn--dark--mode"></span>
                 </label>
                 <h1>to do</h1>
-                <input type="text" name="task" class="input-user" id="task--enter" placeholder="Enter your task"
+                <input type="text" name="task" class="input-user" id="input--task" placeholder="Enter your task"
                     onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter your task'" />
             </div>
         </section>
@@ -31,11 +31,18 @@
                 <ul class="done--tasks--render"></ul>
             </div>
         </section>
-        <section class="side--panel">
-            <!-- <div><button>Close the window</button></div>
-                    <div><label for=""> Enter step <input type="text"></label></div>
-                    <ul class="step--render"></ul> -->
+        <section class="side--panel side--panel--invisible">
+            <div class="id">id</div>
+            <div>
+                <button id="btn--close--side--panel">Close the window</button>
+            </div>
+            <div>
+                <label for="input--step"> Enter step</label>
+                <input type="text" id="input--step">
+            </div>
+            <div class="render"></div>
         </section>
+        <button id="view">view</button>
     </div>
 </body>
 
