@@ -54,6 +54,7 @@ const openSidePanel = (taskId) => {
     let y = `<ul class="step--render"></ul>`
     render.innerHTML = y;
     const stepPanel = document.querySelector('.step--render');
+
     if (tasksArray[index].step.length > 0) {
         let x = '';
         tasksArray[index].step.forEach((item) => {
@@ -154,31 +155,5 @@ view.addEventListener('click', () => {
     console.log(tasksArray);
 })
 darkModeBtn.addEventListener('click', darkMode);
-<<<<<<< HEAD
 
 
-// rozwiązanie marcina:
-// const openPanel = (id) => {
-//     sidePanel.classList.toggle('side--panel--visible');
-//     loadSidePanelData(id);
-// };
-
-// const loadSidePanelData = (id) => {
-//     innerId.innerHTML = id;
-//     inputStep.dataset.id = id;
-// };
-
-// const addStepToTask = (id, value) => {
-//     console.log(id);
-//     console.log(value);
-// };
-// inputStep.addEventListener('keyup', (key) => {
-//     if (key.keyCode === 13) {
-//         addStepToTask(inputStep.dataset.id, inputStep.value);
-//     };
-
-
-// });
-=======
-console.log('test');
->>>>>>> b669208929b522ad81a9ec7a2f1848d7712d9a44
