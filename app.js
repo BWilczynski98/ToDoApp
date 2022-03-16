@@ -154,6 +154,7 @@ view.addEventListener('click', () => {
     console.log(tasksArray);
 })
 darkModeBtn.addEventListener('click', darkMode);
+<<<<<<< HEAD
 
 
 // rozwiązanie marcina:
@@ -178,3 +179,6 @@ darkModeBtn.addEventListener('click', darkMode);
 
 
 // });
+=======
+console.log('test');
+>>>>>>> b669208929b522ad81a9ec7a2f1848d7712d9a44
