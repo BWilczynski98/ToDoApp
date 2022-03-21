@@ -2,12 +2,11 @@
 // inputy
 const inputTask = document.querySelector('#input--task');
 const inputStep = document.querySelector('#input--step');
-const view = document.querySelector('#view')
 // innerHTML
 const tasksPanel = document.querySelector('.to--do--tasks--render');
 const doneTasksPanel = document.querySelector('.done--tasks--render');
 const sidePanel = document.querySelector('.side--panel');
-const render = document.querySelector('.render');
+const containerForSteps = document.querySelector('.step--container');
 let stepPanel = '';
 // arrays
 const tasksArray = [];
@@ -15,12 +14,11 @@ const tasksArray = [];
 const darkModeBtn = document.querySelector('.btn--dark--mode');
 const mainBackground = document.querySelector('body');
 const headerDoneTask = document.querySelector('.header--done--task');
-
 // toggles
-let taskFieldDarkMode = '';
+let darkModeSwitch = '';
 let idTask = 1;
 let idStep = 100;
-
+let indexTask;
 
 // *!--------------------------------Functions----------------------------------------
 const wrongData = (type) => alert(`You have entry empty ${type}, try again`);
@@ -37,50 +35,42 @@ const addTask = (value) => {
     renderTasks();
 };
 
-const loadSidePanelData = (taskId, x) => {
-    inputStep.dataset.id = taskId;
-    stepPanel = x;
-    console.log(stepPanel);
+const renderStep = (index) => {
+    let steps = '';
+    tasksArray[index].step.forEach((item) => {
+        let step = `<li class="${item.idStep}">${item.value}</li>`
+        if (item.done) step = `<li class="line--through">${item.value}</li>`
+        steps += `<button onClick="stepStatus(${index}, ${item.idStep})">done</button>${step}<button onClick="stepDelete(${index}, ${item.idStep})">del</button>`
+    });
+    stepPanel.innerHTML = steps;
 };
 
 const openSidePanel = (taskId) => {
+    // visual actions
     sidePanel.classList.add('side--panel--visible');
     const closePanel = document.querySelector('#btn--close--side--panel');
     closePanel.addEventListener('click', () => {
         sidePanel.classList.remove('side--panel--visible');
     });
-    const id = parseInt(taskId)
-    const index = tasksArray.findIndex(el => el.idTask === id);
-    let y = `<ul class="step--render"></ul>`
-    render.innerHTML = y;
-    const stepPanel = document.querySelector('.step--render');
-
-    if (tasksArray[index].step.length > 0) {
-        let x = '';
-        tasksArray[index].step.forEach((item) => {
-            x += `<li>${item.value}</li>`
-        });
-        stepPanel.innerHTML = x;
-    };
-    loadSidePanelData(taskId, stepPanel);
+    //assign an index from idTask
+    indexTask = tasksArray.findIndex(el => el.idTask === taskId);
+    // call new ul if task has no steps
+    const newUl = `<ul class="ul--with--steps"></ul>`
+    containerForSteps.innerHTML = newUl;
+    // The place where we set the steps
+    stepPanel = document.querySelector('.ul--with--steps');
+    if (tasksArray[indexTask].step.length > 0) renderStep(indexTask);
 };
 
-const addStepToTask = (value, taskId) => {
-    const id = parseInt(taskId)
-    const findTaskById = tasksArray.find(({ idTask }) => idTask === id);
+const addStepToTask = (value) => {
     const step = {
         value,
         idStep,
-        done: false
+        done: false,
     };
     idStep++;
-    findTaskById.step.push(step);
-
-    let x = '';
-    findTaskById.step.forEach((item) => {
-        x += `<li>${item.value}</li>`
-    });
-    stepPanel.innerHTML = x;
+    tasksArray[indexTask].step.push(step)
+    renderStep(indexTask);
 };
 
 const renderTasks = () => {
@@ -90,19 +80,19 @@ const renderTasks = () => {
     let doneTask = '';
     tasks.forEach((item) => {
         task +=
-            `<div class="task ${taskFieldDarkMode}">
+            `<div class="task ${darkModeSwitch}">
             <button class="btn--passive" onClick=taskStatus(${item.idTask})><i class="fas fa-check"></i></button>
             <li onClick="openSidePanel(${item.idTask})">${item.value}</li>
-            <button class="btn--delete" onClick=deleteTask(${item.idTask})><i class="fas fa-trash fas--color"></i></button>
+            <button class="btn--delete" onClick=taskDelete(${item.idTask})><i class="fas fa-trash fas--color"></i></button>
         </div>`
 
     });
     doneTasks.forEach((item) => {
         doneTask +=
-            `<div class="task ${taskFieldDarkMode}">
+            `<div class="task ${darkModeSwitch}">
             <button class="btn--passive" onClick=taskStatus(${item.idTask})><i class="fas fa-check"></i></button>
-            <li onClick=sidePanelStatus()>${item.value}</li>
-            <button class="btn--delete" onClick=deleteTask(${item.idTask})><i class="fas fa-trash fas--color"></i></button>
+            <li onClick="openSidePanel(${item.idTask})">${item.value}</li>
+            <button class="btn--delete" onClick=taskDelete(${item.idTask})><i class="fas fa-trash fas--color"></i></button>
         </div>`
     });
 
@@ -118,21 +108,34 @@ const taskStatus = (id) => {
     renderTasks();
 };
 
-const deleteTask = (id) => {
+const taskDelete = (id) => {
     const index = tasksArray.findIndex(el => el.idTask === id);
     tasksArray.splice(index, 1);
+    sidePanel.classList.remove('side--panel--visible');
     renderTasks();
 };
+
+const stepStatus = (index, idStep) => {
+    const stepIndex = tasksArray[index].step.findIndex(el => el.idStep === idStep);
+    tasksArray[index].step[stepIndex].done = !tasksArray[index].step[stepIndex].done;
+    renderStep(index)
+};
+
+const stepDelete = (index, idStep) => {
+    const stepIndex = tasksArray[index].step.findIndex(el => el.idStep === idStep);
+    tasksArray[index].step.splice(stepIndex, 1);
+    renderStep(index);
+}
 
 const darkMode = () => {
     if (mainBackground.style.backgroundColor === 'rgb(18, 18, 18)') {
         mainBackground.style.backgroundColor = 'rgb(252, 252, 252';
         headerDoneTask.classList.remove('dm--white');
-        taskFieldDarkMode = '';
+        darkModeSwitch = '';
     } else {
         mainBackground.style.backgroundColor = 'rgb(18, 18, 18)';
         headerDoneTask.classList.add('dm--white');
-        taskFieldDarkMode = 'dm--task';
+        darkModeSwitch = 'dm--task';
     };
     renderTasks();
 };
@@ -147,13 +150,10 @@ inputTask.addEventListener('keyup', (key) => {
 
 inputStep.addEventListener('keyup', (key) => {
     if (key.keyCode === 13) {
-        addStepToTask(inputStep.value, inputStep.dataset.id)
+        !inputStep.value.trim() ? wrongData('step') : addStepToTask(inputStep.value);
+        inputStep.value = '';
     };
 });
-
-view.addEventListener('click', () => {
-    console.log(tasksArray);
-})
 darkModeBtn.addEventListener('click', darkMode);
 
 

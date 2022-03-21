@@ -95,7 +95,7 @@ body {
     display: none;
 }
 
-.step--render {
+.ul--with--steps{
     width: 80%;
     height: 300px;
     border: 1px solid black;
@@ -153,6 +153,9 @@ button:hover {
     justify-content: flex-end;
 }
 
+.line--through {
+    text-decoration: line-through;
+}
 /* Dark mode */
 
 .dm--background--body {
